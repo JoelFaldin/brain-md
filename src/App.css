@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+  --background: hsl(220, 13%, 9%);
+  --foreground: hsl(210, 40%, 98%);
+
+  --border: hsl(220, 13%, 18%);
+
+  --glow-primary: hsl(142, 84%, 47%);
+
+  --gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(217 91% 60%));
+}
+
+.btn {
+  @apply py-2 px-3 rounded-md text-white hover:text-black text-xs font-medium cursor-pointer;
+}
