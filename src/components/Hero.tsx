@@ -71,7 +71,6 @@ const Hero = () => {
                 <span className="text-sm font-medium">Auto-Save</span>
               </div>
             </div>
-
           </div>
 
         </div>

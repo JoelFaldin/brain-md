@@ -1,13 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 
+import Header from '../components/Header'
+import Hero from '../components/Hero'
+
 export const Route = createFileRoute('/')({
   component: Index,
 })
 
 function Index() {
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
-    </div>
+    <>
+      <Header />
+      <Hero />
+    </>
   )
 }

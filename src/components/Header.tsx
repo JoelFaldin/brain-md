@@ -1,8 +1,9 @@
+import { Link } from "@tanstack/react-router"
 import GitHub from "../icons/Github"
 
 const Header = () => {
   return (
-    <header className="bg-[var(--background)] w-full sticky top-0 border-b border-[var(--border)] backdrop-blur-sm">
+    <header className="bg-[var(--background)] w-full sticky top-0 border-b border-[var(--border)] backdrop-blur-sm z-50">
       <div className="contianer flex h-16 items-center justify-between px-4">
         <div className="flex items-center space-x-2">
           <div className="flex items-center space-x-2">
@@ -13,12 +14,12 @@ const Header = () => {
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <a className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors cursor-pointer">
-            Features
-          </a>
-          <a className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors cursor-pointer">
+          <Link to="/" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors cursor-pointer">
+            Home
+          </Link>
+          <Link to="/about" className="text-[var(--foreground)]/80 hover:text-[var(--foreground)] transition-colors cursor-pointer">
             About
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center space-x-4">
