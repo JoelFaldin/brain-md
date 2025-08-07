@@ -23,7 +23,7 @@
 }
 
 .btn-text {
-  @apply py-2 px-3 rounded-md text-white hover:text-black text-xs font-medium cursor-pointer;
+  @apply py-2 px-3 rounded-md text-white hover:text-black font-medium cursor-pointer;
 }
 
 .btn {
