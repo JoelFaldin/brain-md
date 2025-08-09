@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router"
+
 import GitHub from "../icons/Github"
 
 const Header = () => {
@@ -26,9 +27,9 @@ const Header = () => {
           <a href="https://github.com/JoelFaldin/brain-md" target="_blank" className="hidden md:flex cursor-pointer">
             <GitHub className="h-5 w-5" />
           </a>
-          <a className="hidden md:flex h-fit w-fit btn-text hover:bg-[var(--glow-primary)] transition-colors">
-            <span className="text-md">Sign In</span>
-          </a>
+          <Link to="/login" className="hidden md:flex h-fit w-fit btn-text hover:bg-[var(--glow-primary)] transition-colors">
+            <span className="text-md">Log in</span>
+          </Link>
           <a className="hidden md:flex h-fit w-fit btn bg-[image:var(--gradient-primary)] hover:shadow-[0_0_12px_var(--glow-primary)] transition-colors">
             <span className="text-md">Get Started</span>
           </a>
