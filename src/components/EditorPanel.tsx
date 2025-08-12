@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react"
+import Note from "../icons/Note"
+import Plus from "../icons/Plus"
 
 const EditorPanel = () => {
+  const [activeNote, setActiveNote] = useState<string | null>(null)
   const [text, setText] = useState('')
 
   const textAreaRef = useRef(null)
@@ -15,29 +18,45 @@ const EditorPanel = () => {
   }
 
   return (
-    <div className="flex-1 p-8 overflow-hidden relative">
+    <div className="flex-1 p-4 overflow-hidden relative">
 
-      <div className="flex w-full h-full p-4 overflow-y-auto rounded-lg shadow">
-          <div
-            ref={lineNumbersRef}
-            className="text-right pr-4 text-gray-400 dark:text-gray-500 text-lg leading-relaxed font-mono overflow-hidden resize-none"
-            style={{ width: '2em' }}
-          >
-          {lineNumbers}
+      {activeNote ? (
+        <div className="">
+          <div className="flex w-full h-full p-4 overflow-y-auto rounded-lg shadow">
+              <div
+                ref={lineNumbersRef}
+                className="text-right pr-4 text-gray-400 dark:text-gray-500 text-lg leading-relaxed font-mono overflow-hidden resize-none"
+                style={{ width: '2em' }}
+              >
+              {lineNumbers}
+            </div>
+
+            <textarea
+              ref={textAreaRef}
+              className="flex-1 resize-none outline-none text-lg leading-relaxed bg-transparent font-mono"
+              placeholder="Start typing now..."
+              value={text}
+              onChange={e => setText(e.target.value)}
+              onScroll={syncScroll}
+              rows={lineNumbers.split('\n').length}
+            >
+              
+            </textarea>
+          </div>
         </div>
-
-        <textarea
-          ref={textAreaRef}
-          className="flex-1 resize-none outline-none text-lg leading-relaxed bg-transparent font-mono"
-          placeholder="Start typing now..."
-          value={text}
-          onChange={e => setText(e.target.value)}
-          onScroll={syncScroll}
-          rows={lineNumbers.split('\n').length}
-        >
-          
-        </textarea>
-      </div>
+      ) : (
+        <div className="flex justify-center items-center w-full h-full">
+          <span className="flex flex-col justify-center items-center gap-5 max-w-md">
+            <Note className="w-36 h-36 text-[var(--muted-foreground)]" />
+            <h2 className="font-bold text-2xl">Welcome to the editor!</h2>
+            <p className="text-[var(--muted-foreground)] text-center">Start creating notes of your favorite topics! Or you can create a brand new one.</p>
+            <button className="w-sm flex flex-row justify-center items-center gap-4 border border-[var(--border)] p-2 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/80 cursor-pointer transition-colors">
+              <Plus className="w-5 h-5" />
+              <span>New note</span>
+            </button>
+          </span>
+        </div>
+      )}
 
     </div>
   )
