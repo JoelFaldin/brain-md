@@ -22,7 +22,7 @@ const EditorComponent = () => {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row bg-[var(--card)]">
       <EditorSidebar isOpen={isSidebarOpen} toggleSidebar={handleToggleSidebar} notes={notes} openNote={handleOpenNote} />
 
       <div className="absolute bottom-10 left-3 z-10 p-1 bg-transparent hover:bg-[var(--primary)] rounded-full cursor-pointer transition-colors">

@@ -9,7 +9,7 @@ const EditorHeader = () => {
   )
 
   return (
-    <header className="flex-1">
+    <header>
       {
         notes.length > 0 && (
           <EditorTab />

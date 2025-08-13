@@ -21,7 +21,7 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
 
   const dispatch = useDispatch()
 
-  const textAreaRef = useRef(null)
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
 
   const lineNumbers = text.split('\n').map((_, index) => index + 1).join('\n')
@@ -43,13 +43,13 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   }
 
   return (
-    <div className="flex-1 p-4 overflow-hidden relative">
+    <div className="flex-1 overflow-hidden relative">
 
       <EditorHeader />
 
       {activeNote ? (
-        <div className="">
-          <div className="flex w-full h-full p-4 overflow-y-auto rounded-lg shadow">
+        <div className="bg-[var(--card)]">
+          <div className="flex w-full h-auto p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
               <div
                 ref={lineNumbersRef}
                 className="text-right pr-4 text-gray-400 dark:text-gray-500 text-lg leading-relaxed font-mono overflow-hidden resize-none"

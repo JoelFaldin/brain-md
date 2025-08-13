@@ -35,7 +35,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
   }
 
   return (
-    <aside className={`${isOpen ? "w-80 opacity-100" : "w-0 opacity-0"} h-screen bg-[var(--card)] flex flex-col gap-y-3 transition-all duration-250 ease-in-out`}>
+    <aside className={`${isOpen ? "w-80 opacity-100" : "w-0 opacity-0"} h-screen bg-[var(--card)] flex flex-col gap-y-3 transition-all duration-250 ease-in-out border-r border-[var(--border)]`}>
       <div className={`${isOpen ? "block" : "hidden"}`}>
 
         <section className="flex flex-row gap-x-3 p-4 items-center border-b border-[var(--border)]">
@@ -74,7 +74,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
             {
               notes.length > 0 ?notes.map((note) => (
                 <li
-                  key={`noteList${note.title}`}
+                  key={`noteList${note.title}-${note.id}`}
                   onClick={() => openNote(note.id)}
                   className="flex flex-row items-center justify-start gap-x-3 pl-5 p-2 rounded-md bg-transparent hover:bg-[var(--primary)]/80 border border-[var(--border)] cursor-pointer transition-colors"
                 >
