@@ -4,7 +4,7 @@ import EditorSidebar from "./EditorSidebar"
 import EditorScreen from "./EditorScreen"
 import PanelLeft from "../icons/PanelLeft"
 import type { AppDispatch, RootState } from "../store/store"
-import { setActiveNote, toggleSidebar } from "../store/noteSlice"
+import { toggleSidebar } from "../store/noteSlice"
 
 const EditorComponent = () => {
   const { notes, isSidebarOpen, activeNoteId } = useSelector(
@@ -15,10 +15,6 @@ const EditorComponent = () => {
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar())
-  }
-
-  const handleSetActiveNote = (id: number) => {
-    dispatch(setActiveNote(id))
   }
 
   return (
@@ -33,7 +29,7 @@ const EditorComponent = () => {
         )}
       </div>
 
-      <EditorScreen activeNote={activeNoteId} setActiveNote={handleSetActiveNote} />
+      <EditorScreen activeNote={activeNoteId} />
     </div>
   )
 }
