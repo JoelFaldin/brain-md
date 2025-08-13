@@ -21,11 +21,15 @@ const notesSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, action: PayloadAction<AddNoteInterface>) => {
+      const newTitle = action.payload.title
+
+      const nameMatchingNotes = state.notes.filter(note => newTitle.match(note.title))
+
       const newNote: NoteInterface = {
         id: action.payload.id,
-        title: action.payload.title,
+        title: nameMatchingNotes.length !== 0 ? `${newTitle} (${nameMatchingNotes.length})` : newTitle
       }
-      
+
       state.notes.push(newNote)
       state.activeNoteId = newNote.id
     },
