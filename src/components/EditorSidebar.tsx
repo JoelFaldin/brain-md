@@ -1,16 +1,14 @@
 import { useState } from "react"
-import { v4 as uuidv4 } from 'uuid';
-import { useDispatch } from "react-redux";
 
 import Close from "../icons/Close"
 import Logout from "../icons/Logout"
 import Note from "../icons/Note"
 import Plus from "../icons/Plus"
 import Search from "../icons/Search"
-import type { AddNoteInterface, NoteInterface } from "../interfaces/NoteInterface"
+import type { NoteInterface } from "../interfaces/NoteInterface"
 import Modal from "./Modal"
 import NewNoteForm from "./NewNoteForm"
-import { addNote, openTab } from "../store/noteSlice"
+import { useCreateNote } from "../hooks/useCreateNote";
 
 interface EditorSidebarInterface {
   isOpen: boolean,
@@ -22,17 +20,7 @@ interface EditorSidebarInterface {
 const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebarInterface) => {  
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const dispatch = useDispatch()
-
-  const handleCreateNewNote = (title: string) => {
-    const newNote: AddNoteInterface = {
-      id: uuidv4(),
-      title,
-    }
-
-    dispatch(addNote(newNote))
-    dispatch(openTab(newNote.id))
-  }
+  const createNewNote = useCreateNote()
 
   return (
     <aside className={`${isOpen ? "w-80 opacity-100" : "w-0 opacity-0"} h-screen bg-[var(--card)] flex flex-col gap-y-3 transition-all duration-250 ease-in-out border-r border-[var(--border)]`}>
@@ -94,7 +82,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
       </div>
 
       <Modal open={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={handleCreateNewNote} />
+        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={createNewNote} />
         <span onClick={() => setIsModalOpen(false)}>
           <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
         </span>

@@ -1,15 +1,12 @@
 import React, { useRef, useState } from "react"
-import { useDispatch } from "react-redux"
-import { v4 as uuidv4 } from 'uuid';
 
 import Note from "../icons/Note"
 import Plus from "../icons/Plus"
 import Modal from "./Modal"
 import NewNoteForm from "./NewNoteForm"
-import { addNote, openTab } from "../store/noteSlice"
 import EditorHeader from "./EditorHeader"
-import type { AddNoteInterface } from "../interfaces/NoteInterface";
 import Close from "../icons/Close";
+import { useCreateNote } from "../hooks/useCreateNote";
 
 interface EditorScreenInterface {
   activeNote: string | null,
@@ -18,8 +15,6 @@ interface EditorScreenInterface {
 const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   const [text, setText] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const dispatch = useDispatch()
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
@@ -32,15 +27,7 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
     }
   }
 
-  const handleCreateNewNote = (title: string) => {
-    const newNote: AddNoteInterface = {
-      id: uuidv4(),
-      title,
-    }
-
-    dispatch(addNote(newNote))
-    dispatch(openTab(newNote.id))
-  }
+  const createNewNote = useCreateNote()
 
   return (
     <div className="flex-1 overflow-hidden relative">
@@ -89,7 +76,7 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
       )}
 
       <Modal open={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={handleCreateNewNote} />
+        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={createNewNote} />
         <span onClick={() => setIsModalOpen(false)}>
           <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
         </span>
