@@ -93,8 +93,11 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
 
       </div>
 
-      <Modal open={isModalOpen}>
+      <Modal open={isModalOpen} closeModal={() => setIsModalOpen(false)}>
         <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={handleCreateNewNote} />
+        <span onClick={() => setIsModalOpen(false)}>
+          <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
+        </span>
       </Modal>
     </aside>
   )

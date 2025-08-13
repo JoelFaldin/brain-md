@@ -9,6 +9,7 @@ import NewNoteForm from "./NewNoteForm"
 import { addNote, openTab } from "../store/noteSlice"
 import EditorHeader from "./EditorHeader"
 import type { AddNoteInterface } from "../interfaces/NoteInterface";
+import Close from "../icons/Close";
 
 interface EditorScreenInterface {
   activeNote: string | null,
@@ -87,8 +88,11 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
         </div>
       )}
 
-      <Modal open={isModalOpen}>
+      <Modal open={isModalOpen} closeModal={() => setIsModalOpen(false)}>
         <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={handleCreateNewNote} />
+        <span onClick={() => setIsModalOpen(false)}>
+          <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
+        </span>
       </Modal>
 
     </div>
