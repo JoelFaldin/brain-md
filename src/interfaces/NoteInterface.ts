@@ -1,5 +1,10 @@
 export interface NoteInterface {
-  id: number,
+  id: string,
   title: string,
   content?: string,
+}
+
+export interface AddNoteInterface {
+  id: string,
+  title: string,
 }

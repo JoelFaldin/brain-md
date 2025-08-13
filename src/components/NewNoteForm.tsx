@@ -21,6 +21,7 @@ const NewNoteForm = ({ closeModal, createNote }: NewNoteInterface) => {
         onChange={event => setNoteName(event.target.value)}
         placeholder="Enter note title..."
         className="p-2 rounded-lg bg-transparent border border-[var(--border)]"
+        autoFocus
       />
 
       <section className="flex flex-row gap-4 justify-end">

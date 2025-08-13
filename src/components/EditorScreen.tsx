@@ -1,15 +1,17 @@
 import React, { useRef, useState } from "react"
 import { useDispatch } from "react-redux"
+import { v4 as uuidv4 } from 'uuid';
 
 import Note from "../icons/Note"
 import Plus from "../icons/Plus"
 import Modal from "./Modal"
 import NewNoteForm from "./NewNoteForm"
-import { addNote } from "../store/noteSlice"
-import type { NoteInterface } from "../interfaces/NoteInterface"
+import { addNote, openTab } from "../store/noteSlice"
+import EditorHeader from "./EditorHeader"
+import type { AddNoteInterface } from "../interfaces/NoteInterface";
 
 interface EditorScreenInterface {
-  activeNote: number | null,
+  activeNote: string | null,
 }
 
 const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
@@ -30,16 +32,19 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   }
 
   const handleCreateNewNote = (title: string) => {
-    const newNote: NoteInterface = {
-      id: 1,
+    const newNote: AddNoteInterface = {
+      id: uuidv4(),
       title,
     }
 
     dispatch(addNote(newNote))
+    dispatch(openTab(newNote.id))
   }
 
   return (
     <div className="flex-1 p-4 overflow-hidden relative">
+
+      <EditorHeader />
 
       {activeNote ? (
         <div className="">
