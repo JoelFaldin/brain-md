@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react"
+import { useDispatch } from "react-redux"
 
 import Note from "../icons/Note"
 import Plus from "../icons/Plus"
 import Modal from "./Modal"
 import NewNoteForm from "./NewNoteForm"
+import { addNote } from "../store/noteSlice"
+import type { NoteInterface } from "../interfaces/NoteInterface"
 
 interface EditorScreenInterface {
   activeNote: number | null,
@@ -12,6 +15,8 @@ interface EditorScreenInterface {
 const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   const [text, setText] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const dispatch = useDispatch()
 
   const textAreaRef = useRef(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
@@ -22,6 +27,15 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
     if (lineNumbersRef.current && textAreaRef.current) {
       lineNumbersRef.current.scrollTop = e.currentTarget.scrollTop;
     }
+  }
+
+  const handleCreateNewNote = (title: string) => {
+    const newNote: NoteInterface = {
+      id: 1,
+      title,
+    }
+
+    dispatch(addNote(newNote))
   }
 
   return (
@@ -69,7 +83,7 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
       )}
 
       <Modal open={isModalOpen}>
-        <NewNoteForm closeModal={() => setIsModalOpen(false)} />
+        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={handleCreateNewNote} />
       </Modal>
 
     </div>

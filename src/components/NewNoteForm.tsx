@@ -2,13 +2,15 @@ import { useState } from "react"
 
 interface NewNoteInterface {
   closeModal: () => void,
+  createNote: (title: string) => void,
 }
 
-const NewNoteForm = ({ closeModal }: NewNoteInterface) => {
+const NewNoteForm = ({ closeModal, createNote }: NewNoteInterface) => {
   const [noteName, setNoteName] = useState('')
 
   const handleCreateNote = () => {
-    console.log(":D")
+    createNote(noteName)
+    closeModal()
   }
 
   return (
@@ -30,9 +32,10 @@ const NewNoteForm = ({ closeModal }: NewNoteInterface) => {
         </button>
         <button
           onClick={handleCreateNote}
-          className="p-2 bg-[var(--primary)] rounded-md hover:bg-[var(--primary)]/80 transition-colors cursor-pointer"
+          disabled={!noteName}
+          className="p-2 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/80 disabled:bg-[var(--primary)]/30 text-black disabled:text-black/70 transition-colors cursor-pointer disabled:cursor-default"
         >
-          <span className="text-black">Create Note</span>
+          Create Note
         </button>
       </section>
 
