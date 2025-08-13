@@ -3,19 +3,15 @@ import Logout from "../icons/Logout"
 import Note from "../icons/Note"
 import Plus from "../icons/Plus"
 import Search from "../icons/Search"
+import type { NoteInterface } from "../interfaces/NoteInterface"
 
 interface EditorSidebarInterface {
   isOpen: boolean,
   toggleSidebar: () => void,
+  notes: NoteInterface[],
 }
 
-const EditorSidebar = ({ isOpen, toggleSidebar }: EditorSidebarInterface) => {
-  const notes = [
-    "Project ideas",
-    "CS Notes",
-    "Lunch",
-  ]
-
+const EditorSidebar = ({ isOpen, toggleSidebar, notes }: EditorSidebarInterface) => {
   return (
     <aside className={`${isOpen ? "w-80 opacity-100" : "w-0 opacity-0"} h-screen bg-[var(--card)] flex flex-col gap-y-3 transition-all duration-250 ease-in-out`}>
       <div className={`${isOpen ? "block" : "hidden"}`}>
@@ -51,10 +47,10 @@ const EditorSidebar = ({ isOpen, toggleSidebar }: EditorSidebarInterface) => {
           <span className="text-[var(--muted-foreground)] text-sm mb-4 block">Notes</span>
           <ul className="flex flex-col gap-y-1 w-full">
             {
-              notes.length > 0 ?notes.map((text) => (
-                <li key={`noteList${text}`} className="flex flex-row items-center justify-start gap-x-3 pl-5 p-2 rounded-md bg-transparent hover:bg-[var(--primary)]/80 border border-[var(--border)] cursor-pointer transition-colors">
+              notes.length > 0 ?notes.map((note) => (
+                <li key={`noteList${note.title}`} className="flex flex-row items-center justify-start gap-x-3 pl-5 p-2 rounded-md bg-transparent hover:bg-[var(--primary)]/80 border border-[var(--border)] cursor-pointer transition-colors">
                   <Note className="w-5 h-5" />
-                  {text}
+                  {note.title}
                 </li>
               ))
               : <li>No notes created (yet).</li>

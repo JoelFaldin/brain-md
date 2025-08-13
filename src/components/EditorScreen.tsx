@@ -1,9 +1,15 @@
 import React, { useRef, useState } from "react"
+
 import Note from "../icons/Note"
 import Plus from "../icons/Plus"
 
-const EditorPanel = () => {
-  const [activeNote, setActiveNote] = useState<string | null>(null)
+interface EditorScreenInterface {
+  activeNote: number | null,
+  setActiveNote: (id: number) => void,
+}
+
+const EditorScreen = ({ activeNote, setActiveNote }: EditorScreenInterface) => {
+  
   const [text, setText] = useState('')
 
   const textAreaRef = useRef(null)
@@ -62,4 +68,4 @@ const EditorPanel = () => {
   )
 }
 
-export default EditorPanel
+export default EditorScreen
