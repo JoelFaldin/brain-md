@@ -1,14 +1,19 @@
 import { useGoogleLogin, type TokenResponse } from "@react-oauth/google"
+import { useNavigate } from "@tanstack/react-router"
+import { useDispatch } from "react-redux"
+
 import Google from "../icons/Google"
 import AuthProvider from "./AuthButton"
-import { useNavigate } from "@tanstack/react-router"
+import { login } from "../store/userSlice"
+import type { UserInterface } from "../interfaces/UserInterface"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
 
 const GoogleButton = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const login = useGoogleLogin({
+  const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse: TokenResponse) => googleAuthHandler(tokenResponse),
     onError: (errorResponse: GoogleErrorInterface) => handleError(errorResponse),
   })
@@ -21,8 +26,15 @@ const GoogleButton = () => {
         }
       })
 
-      const user = await res.json()
-      console.log(user)
+      const userData = await res.json()
+
+      const user: UserInterface = {
+        name: userData.name,
+        email: userData.email,
+        picture: userData.picture
+      }
+
+      dispatch(login(user))
 
       navigate({
         to: "/editor"
@@ -37,7 +49,7 @@ const GoogleButton = () => {
   }
 
   return (
-    <AuthProvider text="Continue with google" onClick={() => login()}>
+    <AuthProvider text="Continue with google" onClick={() => googleLogin()}>
       <Google className="w-4 h-4" />
     </AuthProvider>
   )
