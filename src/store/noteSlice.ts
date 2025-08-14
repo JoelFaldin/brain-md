@@ -23,7 +23,7 @@ const notesSlice = createSlice({
     addNote: (state, action: PayloadAction<AddNoteInterface>) => {
       const newTitle = action.payload.title
 
-      const nameMatchingNotes = state.notes.filter(note => newTitle.match(note.title))
+      const nameMatchingNotes = state.notes.filter(note => note.title === newTitle)
 
       const newNote: NoteInterface = {
         id: action.payload.id,

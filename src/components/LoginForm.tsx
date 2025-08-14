@@ -1,15 +1,11 @@
 import { Link, useNavigate } from "@tanstack/react-router"
 
 import Return from "../icons/Return"
-import Google from "../icons/Google"
 import AuthProvider from "./AuthButton"
+import GoogleButton from "./GoogleButton"
 
 const LoginForm = () => {
   const navigate = useNavigate()
-
-  const googleAuthHandler = () => {
-    console.log('logging in with google!')
-  }
 
   const guestAuthHandler = () => {
     navigate({
@@ -36,9 +32,7 @@ const LoginForm = () => {
             <p className="text-md text-[var(--muted-foreground)]">Choose your prefered log-in method</p>
           </span>
 
-          <AuthProvider text="Continue with google" onClick={googleAuthHandler}>
-            <Google className="w-4 h-4" />
-          </AuthProvider>
+          <GoogleButton />
           
           <hr className="px-6 my-6 mx-auto" />
 
