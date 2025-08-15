@@ -20,6 +20,12 @@ export const userSlice = createSlice({
       state.picture = picture
       state.isLoggedIn = true
     },
+    loginAsGuest: (state) => {
+      state.name = "Guest"
+      state.email = null
+      state.picture = null
+      state.isLoggedIn = true
+    },
     logout: (state) => {
       state.name = null
       state.email = null
@@ -29,6 +35,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const { login, logout } = userSlice.actions
+export const { login, loginAsGuest, logout } = userSlice.actions
 
 export default userSlice.reducer

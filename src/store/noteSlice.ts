@@ -1,13 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { AddNoteInterface, NoteInterface } from "../interfaces/NoteInterface";
-
-interface NotesState {
-  notes: NoteInterface[],
-  activeNoteId: string | null,
-  openedNotes: NoteInterface[],
-  isSidebarOpen: boolean,
-}
+import type { AddNoteInterface, NoteInterface, NotesState } from "../interfaces/NoteInterface";
 
 const initialState: NotesState = {
   notes: [],

@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "@tanstack/react-router"
 
 import Close from "../icons/Close"
 import Logout from "../icons/Logout"
@@ -9,6 +11,9 @@ import type { NoteInterface } from "../interfaces/NoteInterface"
 import Modal from "./Modal"
 import NewNoteForm from "./NewNoteForm"
 import { useCreateNote } from "../hooks/useCreateNote";
+import type { RootState } from "../store/store"
+import { logout } from "../store/userSlice"
+import UserProfile from "../icons/UserProfile"
 
 interface EditorSidebarInterface {
   isOpen: boolean,
@@ -19,22 +24,41 @@ interface EditorSidebarInterface {
 
 const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebarInterface) => {  
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const { name, email, picture } = useSelector(
+    (state: RootState) => state.user
+  )
 
   const createNewNote = useCreateNote()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate({
+      to: "/"
+    })
+  }
 
   return (
     <aside className={`${isOpen ? "w-80 opacity-100" : "w-0 opacity-0"} h-screen bg-[var(--card)] flex flex-col gap-y-3 transition-all duration-250 ease-in-out border-r border-[var(--border)]`}>
       <div className={`${isOpen ? "block" : "hidden"}`}>
 
         <section className="flex flex-row gap-x-3 p-4 items-center border-b border-[var(--border)]">
-          <div className="bg-[var(--muted-foreground)] rounded-full w-8 h-8 p-2" />
-          <span className="flex-1">
-            <div>John Doe</div>
-            <div>johnd@example.com</div>
+          {
+            picture ? (
+              <img src={picture!} className="rounded-full w-12 h-12 p-2" />
+            ) : (
+              <UserProfile className="w-8 h-8" />
+            )
+          }
+          <span className="flex-1 flex flex-col">
+            <span>{ name }</span>
+            <span className="text-sm text-[var(--muted-foreground)]">{ email }</span>
           </span>
-          <div className="bg-transparent p-2 hover:bg-[var(--primary)] rounded-xl transition-colors">
+          <button onClick={handleLogout} className="bg-transparent p-2 hover:bg-[var(--primary)] rounded-xl transition-colors cursor-pointer">
             <Logout className="h-5 w-5" />
-          </div>
+          </button>
         </section>
 
         <section>
