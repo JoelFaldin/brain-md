@@ -1,5 +1,6 @@
 import { ArrowRight } from "../../icons/default"
-import heroImage from "../assets/heroImage.webp"
+
+import heroImage from "../../assets/heroImage.webp"
 
 const Hero = () => {
   return (

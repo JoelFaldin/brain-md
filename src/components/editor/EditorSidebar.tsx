@@ -26,6 +26,7 @@ interface ModalPositionInterface {
 const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebarInterface) => {  
   const [isCreateOpen, setIsCreateModal] = useState(false)
   const [modalPosition, setModalPosition] = useState<ModalPositionInterface | null>(null)
+  const [noteIdOptions, setNoteIdOptions] = useState<string | null>(null)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -46,7 +47,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
   const handleNoteOptions = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
     event.stopPropagation()
 
-    console.log(id)
+    setNoteIdOptions(id)
 
     setModalPosition({
       x: event.clientX,
@@ -108,7 +109,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
                   onClick={() => openNote(note.id)}
                   className="flex flex-row items-center justify-between gap-x-3 pl-5 p-2 rounded-md bg-transparent hover:bg-[var(--primary)]/80 border border-[var(--border)] cursor-pointer transition-colors"
                 >
-                  <span className="flex flex-row items-center gap-3">
+                  <span className="flex flex-row items-center gap-3 select-none">
                     <Note className="w-5 h-5" />
                     {note.title}
                   </span>
@@ -140,6 +141,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
           <OptionsModal
             x={modalPosition.x}
             y={modalPosition.y}
+            noteIdOptions={noteIdOptions}
             onClose={closeOptionsModal}
           />
         )

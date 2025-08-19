@@ -40,6 +40,10 @@ const notesSlice = createSlice({
       if (state.activeNoteId === action.payload) {
         state.activeNoteId = null
       }
+
+      // Removing note from opened tabs if exists and autofocusing next tab:
+      state.openedNotes = state.openedNotes.filter(note => note.id !== action.payload)
+      state.activeNoteId = state.openedNotes[0].id
     },
     setActiveNote: (state, action: PayloadAction<string | null>) => {
       state.activeNoteId = action.payload

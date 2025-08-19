@@ -21,10 +21,10 @@ const EditorTab = () => {
         <div
           key={`title:${note.id}-${note.title}`}
           onClick={() => handleActiveTab(note.id)}
-          className={`px-4 py-2 border-r border-[var(--border)] border-t-2
+          className={`px-4 py-2 border-r border-[var(--border)] border-t-2 cursor-pointer
             ${activeNoteId === note.id ? "bg-[var(--card)] border-t-white z-10 relative -mb-[1px]" : "bg-[var(--background)]"}`}
         >
-          <span className="text-lg">{note.title}.md</span>
+          <span className="text-lg select-none">{note.title}.md</span>
         </div>
       ))
     }

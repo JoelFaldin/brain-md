@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 
 import type { AppDispatch, RootState } from "../../store/store"
-import { openTab, toggleSidebar } from "../../store/noteSlice"
+import { openTab, setActiveNote, toggleSidebar } from "../../store/noteSlice"
 import { EditorScreen, EditorSidebar } from "."
 import { PanelLeft } from "../../icons/default"
 
@@ -17,6 +17,7 @@ const EditorComponent = () => {
   }
 
   const handleOpenNote = (id: string) => {
+    dispatch(setActiveNote(id))
     dispatch(openTab(id))
   }
 
