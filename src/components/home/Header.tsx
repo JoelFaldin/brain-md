@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 
-import GitHub from "../icons/Github"
+import GitHub from "../../icons/brand/Github"
 
 const Header = () => {
   return (

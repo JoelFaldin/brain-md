@@ -2,20 +2,14 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "@tanstack/react-router"
 
-import Close from "../icons/Close"
-import Logout from "../icons/Logout"
-import Note from "../icons/Note"
-import Plus from "../icons/Plus"
-import Search from "../icons/Search"
-import type { NoteInterface } from "../interfaces/NoteInterface"
-import Modal from "./Modal"
-import NewNoteForm from "./NewNoteForm"
-import { useCreateNote } from "../hooks/useCreateNote";
-import type { RootState } from "../store/store"
-import { logout } from "../store/userSlice"
-import UserProfile from "../icons/UserProfile"
-import Options from "../icons/Options"
-import OptionsModal from "./OptionsModal"
+import type { NoteInterface } from "../../interfaces/NoteInterface"
+import Modal from "../Modal"
+import NewNoteForm from "../NewNoteForm"
+import { useCreateNote } from "../../hooks/useCreateNote";
+import type { RootState } from "../../store/store"
+import { logout } from "../../store/userSlice"
+import OptionsModal from "../OptionsModal"
+import { Close, Logout, Note, Options, Plus, Search, UserProfile } from "../../icons/default"
 
 interface EditorSidebarInterface {
   isOpen: boolean,

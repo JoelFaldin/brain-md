@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "@tanstack/react-router"
 import { useDispatch } from "react-redux"
 
-import Return from "../icons/Return"
+import { Return } from "../../icons/default"
 import AuthProvider from "./AuthButton"
 import GoogleButton from "./GoogleButton"
-import { loginAsGuest } from "../store/userSlice"
+import { loginAsGuest } from "../../store/userSlice"
 
 const LoginForm = () => {
   const dispatch = useDispatch()

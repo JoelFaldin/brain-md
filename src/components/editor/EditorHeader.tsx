@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 
-import type { RootState } from "../store/store"
-import EditorTab from "./EditorTab"
+import type { RootState } from "../../store/store"
+import { EditorTab } from "./"
 
 const EditorHeader = () => {
   const { notes } = useSelector(

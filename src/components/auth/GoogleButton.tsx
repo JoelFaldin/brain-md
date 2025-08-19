@@ -2,10 +2,10 @@ import { useGoogleLogin, type TokenResponse } from "@react-oauth/google"
 import { useNavigate } from "@tanstack/react-router"
 import { useDispatch } from "react-redux"
 
-import Google from "../icons/Google"
+import { Google } from "../../icons/brand"
 import AuthProvider from "./AuthButton"
-import { login } from "../store/userSlice"
-import type { UserInterface } from "../interfaces/UserInterface"
+import { login } from "../../store/userSlice"
+import type { UserInterface } from "../../interfaces/UserInterface"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
 

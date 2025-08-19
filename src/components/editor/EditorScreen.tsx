@@ -1,12 +1,10 @@
 import React, { useRef, useState } from "react"
 
-import Note from "../icons/Note"
-import Plus from "../icons/Plus"
-import Modal from "./Modal"
-import NewNoteForm from "./NewNoteForm"
-import EditorHeader from "./EditorHeader"
-import Close from "../icons/Close";
-import { useCreateNote } from "../hooks/useCreateNote";
+import Modal from "../Modal"
+import NewNoteForm from "../NewNoteForm"
+import { Close, Note, Plus } from "../../icons/default";
+import { useCreateNote } from "../../hooks/useCreateNote";
+import { EditorHeader } from "./"
 
 interface EditorScreenInterface {
   activeNote: string | null,

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react"
-import Edit from "../icons/Edit"
-import Delete from "../icons/Delete"
+import { Delete, Edit } from "../icons/default"
 
 interface OptionsModalInterface {
   x: number,

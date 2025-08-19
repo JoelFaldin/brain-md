@@ -1,7 +1,6 @@
-import Email from "../icons/Email"
-import GitHub from "../icons/Github"
+import { Email, Github } from "../../icons/brand"
 
-export const Footer = () => {
+const Footer = () => {
   const footerLinks = [
     {
       text: 'Home',
@@ -60,7 +59,7 @@ export const Footer = () => {
               </li>
               <li className="rounded-full p-2 bg-[var(--primary)]/20 hover:bg-[var(--primary)]/60 transition-colors">
                 <a href="https://github.com/JoelFaldin/brain-md" target="_blank">
-                  <GitHub className="h-5 w-5 color-white" />
+                  <Github className="h-5 w-5 color-white" />
                 </a>
               </li>
             </ul>
@@ -80,3 +79,5 @@ export const Footer = () => {
     </footer>
   )
 }
+
+export default Footer

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Provider } from "react-redux"
 
 import { store } from "../store/store"
-import EditorComponent from "../components/EditorComponent"
+import { EditorComponent } from "../components/editor"
 
 export const Route = createFileRoute('/editor')({
   component: Editor,
