@@ -14,6 +14,8 @@ import { useCreateNote } from "../hooks/useCreateNote";
 import type { RootState } from "../store/store"
 import { logout } from "../store/userSlice"
 import UserProfile from "../icons/UserProfile"
+import Options from "../icons/Options"
+import OptionsModal from "./OptionsModal"
 
 interface EditorSidebarInterface {
   isOpen: boolean,
@@ -22,8 +24,15 @@ interface EditorSidebarInterface {
   openNote: (id: string) => void,
 }
 
+interface ModalPositionInterface {
+  x: number,
+  y: number,
+}
+
 const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebarInterface) => {  
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isCreateOpen, setIsCreateModal] = useState(false)
+  const [modalPosition, setModalPosition] = useState<ModalPositionInterface | null>(null)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -38,6 +47,21 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
     navigate({
       to: "/"
     })
+  }
+
+  const handleNoteOptions = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    event.stopPropagation()
+
+    console.log(id)
+
+    setModalPosition({
+      x: event.clientX,
+      y: event.clientY,
+    })
+  }
+
+  const closeOptionsModal = () => {
+    setModalPosition(null)
   }
 
   return (
@@ -71,7 +95,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
               />
             </div>
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsCreateModal(true)}
               className="w-full p-2 rounded-md flex flex-row items-center justify-center bg-[var(--primary)] hover:bg-[var(--primary)]/80 transition-colors cursor-pointer"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -88,10 +112,15 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
                 <li
                   key={`noteList${note.title}-${note.id}`}
                   onClick={() => openNote(note.id)}
-                  className="flex flex-row items-center justify-start gap-x-3 pl-5 p-2 rounded-md bg-transparent hover:bg-[var(--primary)]/80 border border-[var(--border)] cursor-pointer transition-colors"
+                  className="flex flex-row items-center justify-between gap-x-3 pl-5 p-2 rounded-md bg-transparent hover:bg-[var(--primary)]/80 border border-[var(--border)] cursor-pointer transition-colors"
                 >
-                  <Note className="w-5 h-5" />
-                  {note.title}
+                  <span className="flex flex-row items-center gap-3">
+                    <Note className="w-5 h-5" />
+                    {note.title}
+                  </span>
+                  <button onClick={(event) => handleNoteOptions(event, note.id)}>
+                    <Options className="bg-transparent hover:bg-[var(--primary)]/90 rounded-md transition-colors cursor-pointer" />
+                  </button>
                 </li>
               ))
               : <li>No notes created (yet).</li>
@@ -105,12 +134,22 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
 
       </div>
 
-      <Modal open={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={createNewNote} />
-        <span onClick={() => setIsModalOpen(false)}>
+      <Modal open={isCreateOpen} closeModal={() => setIsCreateModal(false)}>
+        <NewNoteForm closeModal={() => setIsCreateModal(false)} createNote={createNewNote} />
+        <span onClick={() => setIsCreateModal(false)}>
           <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
         </span>
       </Modal>
+
+      {
+        modalPosition && (
+          <OptionsModal
+            x={modalPosition.x}
+            y={modalPosition.y}
+            onClose={closeOptionsModal}
+          />
+        )
+      }
     </aside>
   )
 }
