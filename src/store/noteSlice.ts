@@ -44,7 +44,9 @@ const notesSlice = createSlice({
     setActiveNote: (state, action: PayloadAction<string | null>) => {
       state.activeNoteId = action.payload
     },
-    openTab: (state, action: PayloadAction<string | null>) => {
+    openTab: (state, action: PayloadAction<string>) => {
+      if (state.openedNotes.some(n => n.id === action.payload)) return
+
       const note = state.notes.find(n => n.id === action.payload)
 
       if (note) {

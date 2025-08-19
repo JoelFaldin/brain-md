@@ -108,7 +108,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
           <span className="text-[var(--muted-foreground)] text-sm mb-4 block">Notes</span>
           <ul className="flex flex-col gap-y-1 w-full">
             {
-              notes.length > 0 ?notes.map((note) => (
+              notes.length > 0 ? notes.map((note) => (
                 <li
                   key={`noteList${note.title}-${note.id}`}
                   onClick={() => openNote(note.id)}
