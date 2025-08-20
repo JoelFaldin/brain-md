@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Provider } from "react-redux"
 
-import { LoginForm } from "../components/auth"
-import { store } from "../store/store"
+import { store } from "@store/store"
+import { LoginForm } from "@components/auth"
 
 export const Route = createFileRoute('/login')({
   component: Login,

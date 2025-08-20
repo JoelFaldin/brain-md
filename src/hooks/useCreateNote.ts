@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
 
-import type { AddNoteInterface } from "../interfaces/NoteInterface"
-import { addNote, openTab } from "../store/noteSlice"
+import type { AddNoteInterface } from "@/interfaces"
+import { addNote, openTab } from "@store/noteSlice"
 
 export const useCreateNote = () => {
   const dispatch = useDispatch()

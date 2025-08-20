@@ -1,4 +1,4 @@
-import { Email, Github } from "../../icons/brand"
+import { Email, Github } from "@icons/brand"
 
 const Footer = () => {
   const footerLinks = [

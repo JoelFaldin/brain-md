@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Header } from '../components/home'
+import { Header } from '@components/home'
 
 export const Route = createFileRoute('/about')({
   component: About,

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useDispatch } from "react-redux"
 
-import { Delete, Edit } from "../icons/default"
-import { deleteNote } from "../store/noteSlice"
+import { Delete, Edit } from "@icons/default"
+import { deleteNote } from "@store/noteSlice"
 
 interface OptionsModalInterface {
   x: number,

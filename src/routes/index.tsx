@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Footer, Header, Hero } from '../components/home'
+import { Footer, Header, Hero } from '@components/home'
 
 export const Route = createFileRoute('/')({
   component: Index,

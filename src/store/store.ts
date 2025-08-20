@@ -2,8 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import notesReducer from "./noteSlice"
 import userReducer from "./userSlice"
-import type { NotesState } from "../interfaces/NoteInterface";
-import type { LoginUser, Nullable } from "../interfaces/UserInterface";
+import type { LoginUser, NotesState, Nullable } from "@/interfaces";
 
 export type RootState = {
   notes: NotesState,

@@ -3,13 +3,13 @@ import MDEditor from "@uiw/react-md-editor"
 import rehypeSanitize from "rehype-sanitize"
 import { useSelector } from "react-redux"
 
-import Modal from "../Modal"
-import NewNoteForm from "../NewNoteForm"
-import { Close, Note, Plus } from "../../icons/default";
+import Modal from "@components/Modal";
+import NewNoteForm from "@components/NewNoteForm";
+import { Close, Note, Plus } from "@icons/default";
 import { useCreateNote } from "../../hooks/useCreateNote";
 import { EditorHeader } from "./"
-import { setNoteContent } from "../../store/noteSlice"
-import type { RootState } from "../../store/store"
+import { setNoteContent } from "@store/noteSlice";
+import type { RootState } from "@store/store";
 import { useSaveShortCut } from "../../hooks/useSaveShortcut"
 
 interface EditorScreenInterface {

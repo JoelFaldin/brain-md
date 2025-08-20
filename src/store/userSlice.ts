@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { LoginUser, Nullable, UserInterface } from "../interfaces/UserInterface"
+
+import type { LoginUser, Nullable, UserInterface } from "@/interfaces"
 
 const initialState: Nullable<LoginUser> = {
   name: null,

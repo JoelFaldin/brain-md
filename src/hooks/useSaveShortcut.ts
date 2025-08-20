@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import type { UnknownAction } from "@reduxjs/toolkit"
 
-import type { SaveContent } from "../interfaces/NoteInterface"
+import type { SaveContent } from "@/interfaces"
 
 export const useSaveShortCut = (content: SaveContent, actionCreator: (payload: SaveContent) => UnknownAction) => {
   const dispatch = useDispatch()

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 
-import type { AppDispatch, RootState } from "../../store/store"
-import { openTab, setActiveNote, toggleSidebar } from "../../store/noteSlice"
-import { EditorScreen, EditorSidebar } from "."
-import { PanelLeft } from "../../icons/default"
+import { PanelLeft } from "@icons/default"
+import { EditorScreen, EditorSidebar } from "./"
+import type { AppDispatch, RootState } from "@store/store"
+import { openTab, setActiveNote, toggleSidebar } from "@store/noteSlice"
 
 const EditorComponent = () => {
   const { notes, isSidebarOpen, activeNoteId } = useSelector(
