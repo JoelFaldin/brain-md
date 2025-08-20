@@ -1,22 +1,38 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MDEditor from "@uiw/react-md-editor"
 import rehypeSanitize from "rehype-sanitize"
+import { useSelector } from "react-redux"
 
 import Modal from "../Modal"
 import NewNoteForm from "../NewNoteForm"
 import { Close, Note, Plus } from "../../icons/default";
 import { useCreateNote } from "../../hooks/useCreateNote";
 import { EditorHeader } from "./"
+import { setNoteContent } from "../../store/noteSlice"
+import type { RootState } from "../../store/store"
+import { useSaveShortCut } from "../../hooks/useSaveShortcut"
 
 interface EditorScreenInterface {
-  activeNote: string | null,
+  activeNote: string,
 }
 
 const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editorValue, setEditorValue] = useState<string | undefined>()
 
+  const { notes } = useSelector(
+    (state: RootState) => state.notes
+  )
+
   const createNewNote = useCreateNote()
+
+  useSaveShortCut({ id: activeNote, content: editorValue ?? "" }, setNoteContent)
+
+  useEffect(() => {
+    const noteContent = notes.find(n => n.id === activeNote)
+
+    setEditorValue(noteContent?.content ?? "")
+  }, [activeNote, notes])
 
   return (
     <div className="flex-1 overflow-hidden relative">
@@ -24,15 +40,15 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
       <EditorHeader />
 
       {activeNote ? (
-        <div className="bg-[var(--card)] h-screen">
-          <div className="flex w-full h-full p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
+        <div className="bg-[var(--card)]">
+          <div className="flex w-full p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
             <MDEditor
               value={editorValue}
               onChange={setEditorValue}
               previewOptions={{
                 rehypePlugins: [[rehypeSanitize]]
               }}
-              className="w-full h-full"
+              className="w-full"
             />
           </div>
         </div>

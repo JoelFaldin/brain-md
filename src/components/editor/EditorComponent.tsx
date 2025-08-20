@@ -33,7 +33,7 @@ const EditorComponent = () => {
         )}
       </div>
 
-      <EditorScreen activeNote={activeNoteId} />
+      <EditorScreen activeNote={activeNoteId!} />
     </div>
   )
 }

@@ -1,10 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { AddNoteInterface, NoteInterface, NotesState } from "../interfaces/NoteInterface";
+import type { AddNoteInterface, NoteInterface, NotesState, SaveContent } from "../interfaces/NoteInterface";
 
 const initialState: NotesState = {
   notes: [],
   activeNoteId: null,
+  activeNoteContent: null,
   openedNotes: [],
   isSidebarOpen: true,
 }
@@ -59,6 +60,13 @@ const notesSlice = createSlice({
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen
+    },
+    setNoteContent: (state, action: PayloadAction<SaveContent>) => {
+      const note = state.notes.find(n => n.id === action.payload.id)
+
+      if (note) {
+        note.content = action.payload.content
+      }
     }
   }
 })
@@ -69,7 +77,8 @@ export const {
   deleteNote,
   setActiveNote,
   openTab,
-  toggleSidebar
+  toggleSidebar,
+  setNoteContent,
 } = notesSlice.actions
 
 export default notesSlice.reducer

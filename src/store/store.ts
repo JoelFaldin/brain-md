@@ -20,7 +20,7 @@ const loadState = (): RootState | undefined => {
   }
 }
 
-const saveState = (state: any) => {
+const saveState = (state: RootState) => {
   try {
     const serializedState = JSON.stringify(state)
     localStorage.setItem("reduxState", serializedState)

@@ -12,6 +12,12 @@ export interface AddNoteInterface {
 export interface NotesState {
   notes: NoteInterface[],
   activeNoteId: string | null,
+  activeNoteContent: string | null,
   openedNotes: NoteInterface[],
   isSidebarOpen: boolean,
+}
+
+export interface SaveContent {
+  id: string,
+  content: string
 }
