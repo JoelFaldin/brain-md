@@ -12,6 +12,7 @@
       "@components/*": ["src/components/*"],
       "@store/*": ["src/store/*"],
       "@icons/*": ["src/icons/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@/*": ["src/*"],
     },
 

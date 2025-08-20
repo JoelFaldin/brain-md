@@ -5,7 +5,7 @@ import { useNavigate } from "@tanstack/react-router"
 import Modal from "@components/Modal";
 import NewNoteForm from "@components/NewNoteForm";
 import type { NoteInterface } from "@/interfaces/NoteInterface"
-import { useCreateNote } from "../../hooks/useCreateNote";
+import { useCreateNote } from "@hooks/index";
 import type { RootState } from "@store/store"
 import { logout } from "@store/userSlice"
 import OptionsModal from "@components/OptionsModal"

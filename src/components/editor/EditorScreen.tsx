@@ -6,11 +6,10 @@ import { useSelector } from "react-redux"
 import Modal from "@components/Modal";
 import NewNoteForm from "@components/NewNoteForm";
 import { Close, Note, Plus } from "@icons/default";
-import { useCreateNote } from "../../hooks/useCreateNote";
+import { useCreateNote, useSaveShortCut } from "@hooks/index";
 import { EditorHeader } from "./"
 import { setNoteContent } from "@store/noteSlice";
 import type { RootState } from "@store/store";
-import { useSaveShortCut } from "../../hooks/useSaveShortcut"
 
 interface EditorScreenInterface {
   activeNote: string,
