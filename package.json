@@ -15,11 +15,13 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-router": "^1.130.12",
     "@tanstack/react-router-devtools": "^1.130.13",
+    "@uiw/react-md-editor": "^4.0.8",
     "express": "^5.1.0",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
+    "rehype-sanitize": "^6.0.0",
     "tailwindcss": "^4.1.11",
     "uuid": "^11.1.0"
   },

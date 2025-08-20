@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react"
+import { useState } from "react"
+import MDEditor from "@uiw/react-md-editor"
+import rehypeSanitize from "rehype-sanitize"
 
 import Modal from "../Modal"
 import NewNoteForm from "../NewNoteForm"
@@ -11,19 +13,8 @@ interface EditorScreenInterface {
 }
 
 const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
-  const [text, setText] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const textAreaRef = useRef<HTMLTextAreaElement>(null)
-  const lineNumbersRef = useRef<HTMLDivElement>(null)
-
-  const lineNumbers = text.split('\n').map((_, index) => index + 1).join('\n')
-
-  const syncScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
-    if (lineNumbersRef.current && textAreaRef.current) {
-      lineNumbersRef.current.scrollTop = e.currentTarget.scrollTop;
-    }
-  }
+  const [editorValue, setEditorValue] = useState<string | undefined>()
 
   const createNewNote = useCreateNote()
 
@@ -33,27 +24,16 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
       <EditorHeader />
 
       {activeNote ? (
-        <div className="bg-[var(--card)]">
-          <div className="flex w-full h-auto p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
-              <div
-                ref={lineNumbersRef}
-                className="text-right pr-4 text-gray-400 dark:text-gray-500 text-lg leading-relaxed font-mono overflow-hidden resize-none"
-                style={{ width: '2em' }}
-              >
-              {lineNumbers}
-            </div>
-
-            <textarea
-              ref={textAreaRef}
-              className="flex-1 resize-none outline-none text-lg leading-relaxed bg-transparent font-mono"
-              placeholder="Start typing now..."
-              value={text}
-              onChange={e => setText(e.target.value)}
-              onScroll={syncScroll}
-              rows={lineNumbers.split('\n').length}
-            >
-              
-            </textarea>
+        <div className="bg-[var(--card)] h-screen">
+          <div className="flex w-full h-full p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
+            <MDEditor
+              value={editorValue}
+              onChange={setEditorValue}
+              previewOptions={{
+                rehypePlugins: [[rehypeSanitize]]
+              }}
+              className="w-full h-full"
+            />
           </div>
         </div>
       ) : (
