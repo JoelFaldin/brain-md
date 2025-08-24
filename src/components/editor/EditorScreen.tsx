@@ -3,13 +3,12 @@ import MDEditor from "@uiw/react-md-editor"
 import rehypeSanitize from "rehype-sanitize"
 import { useDispatch, useSelector } from "react-redux"
 
-import Modal from "@components/Modal";
-import NewNoteForm from "@components/NewNoteForm";
 import { Close, Note, Plus } from "@icons/default";
 import { useCreateNote, useSaveShortCut } from "@hooks/index";
-import { EditorHeader } from "./"
+import { EditorHeader, EditorNewNote } from "./"
 import { makeDirty, saveNote } from "@store/noteSlice";
 import type { RootState } from "@store/store";
+import { Modal } from "@components/modals";
 
 interface EditorScreenInterface {
   activeNote: string,
@@ -76,7 +75,7 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
       )}
 
       <Modal open={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <NewNoteForm closeModal={() => setIsModalOpen(false)} createNote={createNewNote} />
+        <EditorNewNote closeModal={() => setIsModalOpen(false)} createNote={createNewNote} />
         <span onClick={() => setIsModalOpen(false)}>
           <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
         </span>

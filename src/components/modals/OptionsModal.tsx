@@ -1,20 +1,17 @@
 import { useEffect, useRef } from "react"
-import { useDispatch } from "react-redux"
 
 import { Delete, Edit } from "@icons/default"
-import { deleteNote } from "@store/noteSlice"
 
 interface OptionsModalInterface {
   x: number,
   y: number,
   noteIdOptions: string | null,
   onClose: () => void,
+  triggerDeleteModal: (arg: boolean) => void,
 }
 
-const OptionsModal = ({ x, y, noteIdOptions, onClose }: OptionsModalInterface) => {
+const OptionsModal = ({ x, y, noteIdOptions, onClose, triggerDeleteModal }: OptionsModalInterface) => {
   const modalRef = useRef<HTMLDivElement>(null)
-
-  const dispatch = useDispatch()
 
   useEffect(() => {
     const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -34,11 +31,6 @@ const OptionsModal = ({ x, y, noteIdOptions, onClose }: OptionsModalInterface) =
     console.log("editing!", noteIdOptions)
   }
 
-  const handleDeleteNote = () => {
-    dispatch(deleteNote(noteIdOptions))
-    onClose()
-  }
-
   return (
     <div
       ref={modalRef}
@@ -53,7 +45,7 @@ const OptionsModal = ({ x, y, noteIdOptions, onClose }: OptionsModalInterface) =
           </button>
         </li>
         <li>
-          <button onClick={handleDeleteNote} className="flex flex-row gap-2 w-full rounded-md hover:bg-[var(--muted)] p-2">
+          <button onClick={() => triggerDeleteModal(true)} className="flex flex-row gap-2 w-full rounded-md hover:bg-[var(--muted)] p-2">
             <Delete className="h-5 w-5" />
             Delete
           </button>

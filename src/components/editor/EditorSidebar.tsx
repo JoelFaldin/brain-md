@@ -2,14 +2,14 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "@tanstack/react-router"
 
-import Modal from "@components/Modal";
-import NewNoteForm from "@components/NewNoteForm";
+import EditorNewNote from "./EditorNewNote";
 import type { NoteInterface } from "@/interfaces/NoteInterface"
 import { useCreateNote } from "@hooks/index";
 import type { RootState } from "@store/store"
 import { logout } from "@store/userSlice"
-import OptionsModal from "@components/OptionsModal"
+import { deleteNote } from "@store/noteSlice";
 import { Close, Logout, Note, Options, Plus, Search, UserProfile } from "@icons/default"
+import { Modal, OptionsModal } from "@components/modals";
 
 interface EditorSidebarInterface {
   isOpen: boolean,
@@ -27,6 +27,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
   const [isCreateOpen, setIsCreateModal] = useState(false)
   const [modalPosition, setModalPosition] = useState<ModalPositionInterface | null>(null)
   const [noteIdOptions, setNoteIdOptions] = useState<string | null>(null)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -57,6 +58,12 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
 
   const closeOptionsModal = () => {
     setModalPosition(null)
+  }
+
+  const handleDeleteNote = () => {
+    setIsDeleteOpen(false)
+    closeOptionsModal()
+    dispatch(deleteNote(noteIdOptions))
   }
 
   return (
@@ -130,7 +137,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
       </div>
 
       <Modal open={isCreateOpen} closeModal={() => setIsCreateModal(false)}>
-        <NewNoteForm closeModal={() => setIsCreateModal(false)} createNote={createNewNote} />
+        <EditorNewNote closeModal={() => setIsCreateModal(false)} createNote={createNewNote} />
         <span onClick={() => setIsCreateModal(false)}>
           <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
         </span>
@@ -143,9 +150,35 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
             y={modalPosition.y}
             noteIdOptions={noteIdOptions}
             onClose={closeOptionsModal}
+            triggerDeleteModal={setIsDeleteOpen}
           />
         )
       }
+
+      <Modal open={isDeleteOpen} closeModal={() => setIsDeleteOpen(false)}>
+        <div className="flex flex-col gap-3" onClick={e => e.stopPropagation()}>
+          <h2 className="font-bold text-xl">Confirm note deletion</h2>
+          <p>You will never be able to see it again.</p>
+
+          <span className="flex flex-row gap-3 justify-end">
+            <button
+              className="p-2 border border-[var(--border)] rounded-md bg-[var(--card)] hover:bg-[var(--primary)] transition-colors cursor-pointer"
+              onClick={() => setIsDeleteOpen(false)}
+            >
+              <span className="text-white">Cancel</span>
+            </button>
+            <button
+              className="p-2 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/80 disabled:bg-[var(--primary)]/30 text-black disabled:text-black/70 transition-colors cursor-pointer disabled:cursor-default"
+              onClick={handleDeleteNote}
+            >
+              I understand
+            </button>
+          </span>
+        </div>
+        <span onClick={() => setIsDeleteOpen(false)}>
+          <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
+        </span>
+      </Modal>
     </aside>
   )
 }

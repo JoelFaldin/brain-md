@@ -5,7 +5,7 @@ interface NewNoteInterface {
   createNote: (title: string) => void,
 }
 
-const NewNoteForm = ({ closeModal, createNote }: NewNoteInterface) => {
+const EditorNewNote = ({ closeModal, createNote }: NewNoteInterface) => {
   const [noteName, setNoteName] = useState('')
 
   const handleCreateNote = () => {
@@ -44,4 +44,4 @@ const NewNoteForm = ({ closeModal, createNote }: NewNoteInterface) => {
   )
 }
 
-export default NewNoteForm
+export default EditorNewNote
