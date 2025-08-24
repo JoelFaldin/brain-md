@@ -33,14 +33,17 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
     setEditorValue(noteContent?.content ?? "")
   }, [activeNote, notes])
 
+  const currentNote = notes.find(n => n.id === activeNote)
+  const isChanged = currentNote?.content !== editorValue
+
   return (
     <div className="flex-1 overflow-hidden relative">
 
-      <EditorHeader />
+      <EditorHeader isChanged={isChanged} activeNote={activeNote} />
 
       {activeNote ? (
         <div className="bg-[var(--card)]">
-          <div className="flex w-full p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
+          <div className="flex w-full h-auto p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
             <MDEditor
               value={editorValue}
               onChange={setEditorValue}
@@ -48,6 +51,7 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
                 rehypePlugins: [[rehypeSanitize]]
               }}
               className="w-full"
+              height={800}
             />
           </div>
         </div>
