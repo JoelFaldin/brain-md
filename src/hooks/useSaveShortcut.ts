@@ -11,7 +11,6 @@ export const useSaveShortCut = (content: SaveContent, actionCreator: (payload: S
     const handler = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault()
-        console.log("saving :D:D:D")
         dispatch(actionCreator(content))
       }
     }

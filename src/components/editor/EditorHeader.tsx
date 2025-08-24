@@ -2,11 +2,19 @@ import { useDispatch, useSelector } from "react-redux"
 
 import type { RootState } from "@store/store"
 import { setActiveNote } from "@store/noteSlice"
+import { createSelector } from "@reduxjs/toolkit"
 
 const EditorHeader = () => {
   const { notes, openedNotes, activeNoteId } = useSelector(
     (state: RootState) => state.notes
   )
+
+  const selectNotesById = createSelector(
+    (state: RootState) => state.notes.notes,
+    (notes) => Object.fromEntries(notes.map(n => [n.id, n]))
+  )
+
+  const notesById = useSelector(selectNotesById)
 
   const dispatch = useDispatch()
 
@@ -22,8 +30,7 @@ const EditorHeader = () => {
           {
             openedNotes.map(note => {
               const isActive = activeNoteId === note.id
-              const findNote = notes.find(n => n.id === note.id)
-              const isDirty = findNote?.dirty
+              const isDirty = notesById[note.id].dirty
 
               return (
                 <div
