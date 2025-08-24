@@ -2,6 +2,7 @@ export interface NoteInterface {
   id: string,
   title: string,
   content?: string,
+  dirty: boolean,
 }
 
 export interface AddNoteInterface {
@@ -20,4 +21,9 @@ export interface NotesState {
 export interface SaveContent {
   id: string,
   content: string
+}
+
+export interface Dirty {
+  id: string,
+  dirty: boolean,
 }

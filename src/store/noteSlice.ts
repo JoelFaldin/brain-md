@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { AddNoteInterface, NoteInterface, NotesState, SaveContent } from "@/interfaces";
+import type { AddNoteInterface, NoteInterface, NotesState, SaveContent, Dirty } from "@/interfaces";
 
 const initialState: NotesState = {
   notes: [],
@@ -21,7 +21,8 @@ const notesSlice = createSlice({
 
       const newNote: NoteInterface = {
         id: action.payload.id,
-        title: nameMatchingNotes.length !== 0 ? `${newTitle} (${nameMatchingNotes.length})` : newTitle
+        title: nameMatchingNotes.length !== 0 ? `${newTitle} (${nameMatchingNotes.length})` : newTitle,
+        dirty: false,
       }
 
       state.notes.push(newNote)
@@ -33,6 +34,7 @@ const notesSlice = createSlice({
       if (note) {
         if (action.payload.title !== undefined) note.title = action.payload.title
         if (action.payload.content !== undefined) note.content = action.payload.content
+        note.dirty = true
       }
     },
     deleteNote: (state, action: PayloadAction<string | null>) => {
@@ -61,11 +63,19 @@ const notesSlice = createSlice({
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen
     },
-    setNoteContent: (state, action: PayloadAction<SaveContent>) => {
+    saveNote: (state, action: PayloadAction<SaveContent>) => {
       const note = state.notes.find(n => n.id === action.payload.id)
 
       if (note) {
         note.content = action.payload.content
+        note.dirty = false
+      }
+    },
+    makeDirty: (state, action: PayloadAction<Dirty>) => {
+      const note = state.notes.find(n => n.id === action.payload.id)
+      
+      if (note) {
+        note.dirty = action.payload.dirty
       }
     }
   }
@@ -78,7 +88,8 @@ export const {
   setActiveNote,
   openTab,
   toggleSidebar,
-  setNoteContent,
+  saveNote,
+  makeDirty,
 } = notesSlice.actions
 
 export default notesSlice.reducer

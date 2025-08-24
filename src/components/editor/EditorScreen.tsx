@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import MDEditor from "@uiw/react-md-editor"
 import rehypeSanitize from "rehype-sanitize"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import Modal from "@components/Modal";
 import NewNoteForm from "@components/NewNoteForm";
 import { Close, Note, Plus } from "@icons/default";
 import { useCreateNote, useSaveShortCut } from "@hooks/index";
 import { EditorHeader } from "./"
-import { setNoteContent } from "@store/noteSlice";
+import { makeDirty, saveNote } from "@store/noteSlice";
 import type { RootState } from "@store/store";
 
 interface EditorScreenInterface {
@@ -24,8 +24,9 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   )
 
   const createNewNote = useCreateNote()
+  const dispatch = useDispatch()
 
-  useSaveShortCut({ id: activeNote, content: editorValue ?? "" }, setNoteContent)
+  useSaveShortCut({ id: activeNote, content: editorValue ?? "" }, saveNote)
 
   useEffect(() => {
     const noteContent = notes.find(n => n.id === activeNote)
@@ -33,20 +34,22 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
     setEditorValue(noteContent?.content ?? "")
   }, [activeNote, notes])
 
-  const currentNote = notes.find(n => n.id === activeNote)
-  const isChanged = currentNote?.content !== editorValue
+  const handleChange = (event: string | undefined) => {
+    dispatch(makeDirty({ id: activeNote, dirty: true }))
+    setEditorValue(event)
+  }
 
   return (
     <div className="flex-1 overflow-hidden relative">
 
-      <EditorHeader isChanged={isChanged} activeNote={activeNote} />
+      <EditorHeader />
 
       {activeNote ? (
         <div className="bg-[var(--card)]">
           <div className="flex w-full h-auto p-2 overflow-y-auto rounded-lg bg-[var(--card)]">
             <MDEditor
               value={editorValue}
-              onChange={setEditorValue}
+              onChange={(event) => handleChange(event)}
               previewOptions={{
                 rehypePlugins: [[rehypeSanitize]]
               }}
