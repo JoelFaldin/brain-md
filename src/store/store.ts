@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import notesReducer from "./noteSlice"
 import userReducer from "./userSlice"
+import { authApi } from "./auth";
 import type { LoginUser, NotesState, Nullable } from "@/interfaces";
 
 export type RootState = {
@@ -32,8 +33,11 @@ export const store = configureStore({
   reducer: {
     notes: notesReducer,
     user: userReducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
-  preloadedState: loadState()
+  preloadedState: loadState(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware),
 })
 
 store.subscribe(() => {

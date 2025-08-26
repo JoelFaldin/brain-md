@@ -6,12 +6,15 @@ import { Google } from "../../icons/brand"
 import AuthProvider from "./AuthButton"
 import { login } from "../../store/userSlice"
 import type { UserInterface } from "@/interfaces/UserInterface"
+import { authApi } from "@store/auth"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
 
 const GoogleButton = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const [googleOAuth] = authApi.useGoogleOAuthMutation()
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse: TokenResponse) => googleAuthHandler(tokenResponse),
@@ -20,25 +23,24 @@ const GoogleButton = () => {
 
   const googleAuthHandler = async (tokenResponse: TokenResponse) => {
     try {
-      const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: {
-          Authorization: `Bearer ${tokenResponse.access_token}`
+
+      const res = await googleOAuth(tokenResponse.access_token)
+      const data = res.data;
+
+      if (data) {
+        const user: UserInterface = {
+          name: data.name,
+          email: data.email,
+          picture: data.picture
         }
-      })
 
-      const userData = await res.json()
+        console.log(user)
+        dispatch(login(user))
 
-      const user: UserInterface = {
-        name: userData.name,
-        email: userData.email,
-        picture: userData.picture
+        navigate({
+          to: "/editor"
+        })
       }
-
-      dispatch(login(user))
-
-      navigate({
-        to: "/editor"
-      })
     } catch (error) {
       console.log(error)
     }
