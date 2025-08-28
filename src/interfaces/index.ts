@@ -7,3 +7,5 @@ export type { Dirty } from "./NoteInterface"
 export type { UserInterface } from "./UserInterface"
 export type { Nullable } from "./UserInterface"
 export type { LoginUser } from "./UserInterface"
+
+export type { AuthInterface } from "./AuthInterface"

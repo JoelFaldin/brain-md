@@ -1,8 +1,7 @@
 export interface AuthInterface {
-  email: string,
+  response: string,
+  token: string,
   name: string,
-}
-
-export interface ExtendedAuthInterface extends AuthInterface {
+  email: string,
   picture: string,
 }

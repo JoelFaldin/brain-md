@@ -2,12 +2,11 @@ import { useGoogleLogin, type TokenResponse } from "@react-oauth/google"
 import { useNavigate } from "@tanstack/react-router"
 import { useDispatch } from "react-redux"
 
-import { Google } from "../../icons/brand"
+import { Google } from "@icons/brand"
 import AuthProvider from "./AuthButton"
-import { login } from "../../store/userSlice"
-import type { UserInterface } from "@/interfaces/UserInterface"
+import { login } from "@store/userSlice"
 import { authApi } from "@store/auth"
-import type { ExtendedAuthInterface } from "@/interfaces/AuthInterface"
+import type { AuthInterface, UserInterface } from "@/interfaces"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
 
@@ -15,38 +14,31 @@ const GoogleButton = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [googleOAuth] = authApi.useGoogleOAuthMutation()
   const [backendOAuth] = authApi.useGoogleBackendOAuthMutation()
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse: TokenResponse) => {
-      const res = await googleOAuth(tokenResponse.access_token)
+      const res = await backendOAuth({ token: tokenResponse.access_token })
 
       googleAuthHandler(res.data)
     },
     onError: (errorResponse: GoogleErrorInterface) => handleError(errorResponse),
   })
 
-  const googleAuthHandler = async (response: ExtendedAuthInterface) => {
+  const googleAuthHandler = async (response: AuthInterface) => {
     try {
-
-      const res = await backendOAuth({ email: response.email, name: response.name })
-      const data = res.data;
-
-      if (response && data) {
-        const user: UserInterface = {
-          name: response.name,
-          email: response.email,
-          picture: response.picture,
-          token: data.token,
-        }
-
-        dispatch(login(user))
-
-        navigate({
-          to: "/editor"
-        })
+      const user: UserInterface = {
+        name: response.name,
+        email: response.email,
+        picture: response.picture,
+        token: response.token,
       }
+
+      dispatch(login(user))
+
+      navigate({
+        to: "/editor"
+      })
     } catch (error) {
       console.log(error)
     }
