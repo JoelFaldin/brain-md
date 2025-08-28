@@ -2,18 +2,30 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import type { AuthInterface } from "@/interfaces/AuthInterface";
 
+const backendApi = import.meta.env.VITE_BACKEND_URL
+const googleApi = import.meta.env.VITE_GOOGLE_BACKEND
+
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "" }),
   endpoints: (builder) => ({
-    googleOAuth: builder.mutation<AuthInterface, string>({
-      query: (token) => ({
-        url: "/auth/google",
+    googleBackendOAuth: builder.mutation<{ response: string, token: string }, AuthInterface>({
+      query: ({ email, name }) => ({
+        url: backendApi,
         method: "POST",
-        body: { token: `Bearer ${token}` }
+        body: { email, name }
       }),
+    }),
+    googleOAuth: builder.mutation({
+      query: (token) => ({
+        url: googleApi,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     })
   })
 })
 
-export const { useGoogleOAuthMutation } = authApi
+export const { useGoogleBackendOAuthMutation, useGoogleOAuthMutation } = authApi

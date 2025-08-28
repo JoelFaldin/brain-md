@@ -7,6 +7,7 @@ import AuthProvider from "./AuthButton"
 import { login } from "../../store/userSlice"
 import type { UserInterface } from "@/interfaces/UserInterface"
 import { authApi } from "@store/auth"
+import type { ExtendedAuthInterface } from "@/interfaces/AuthInterface"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
 
@@ -15,26 +16,31 @@ const GoogleButton = () => {
   const navigate = useNavigate()
 
   const [googleOAuth] = authApi.useGoogleOAuthMutation()
+  const [backendOAuth] = authApi.useGoogleBackendOAuthMutation()
 
   const googleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse: TokenResponse) => googleAuthHandler(tokenResponse),
+    onSuccess: async (tokenResponse: TokenResponse) => {
+      const res = await googleOAuth(tokenResponse.access_token)
+
+      googleAuthHandler(res.data)
+    },
     onError: (errorResponse: GoogleErrorInterface) => handleError(errorResponse),
   })
 
-  const googleAuthHandler = async (tokenResponse: TokenResponse) => {
+  const googleAuthHandler = async (response: ExtendedAuthInterface) => {
     try {
 
-      const res = await googleOAuth(tokenResponse.access_token)
+      const res = await backendOAuth({ email: response.email, name: response.name })
       const data = res.data;
 
-      if (data) {
+      if (response && data) {
         const user: UserInterface = {
-          name: data.name,
-          email: data.email,
-          picture: data.picture
+          name: response.name,
+          email: response.email,
+          picture: response.picture,
+          token: data.token,
         }
 
-        console.log(user)
         dispatch(login(user))
 
         navigate({

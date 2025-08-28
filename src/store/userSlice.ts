@@ -7,6 +7,7 @@ const initialState: Nullable<LoginUser> = {
   email: null,
   picture: null,
   isLoggedIn: false,
+  token: null,
 }
 
 export const userSlice = createSlice({
@@ -14,12 +15,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<UserInterface>) => {
-      const { name, email, picture } = action.payload
+      const { name, email, picture, token } = action.payload
 
       state.name = name
       state.email = email
       state.picture = picture
       state.isLoggedIn = true
+      state.token = token
     },
     loginAsGuest: (state) => {
       state.name = "Guest"
