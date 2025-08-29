@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { AddNoteInterface, NoteInterface, NotesState, SaveContent, Dirty } from "@/interfaces";
+import type { AddNoteInterface, NotesState, SaveContent, Dirty } from "@/interfaces";
+import type { NoteInterfaceDirty } from "@/interfaces/NoteInterface";
 
 const initialState: NotesState = {
   notes: [],
@@ -19,7 +20,7 @@ const notesSlice = createSlice({
 
       const nameMatchingNotes = state.notes.filter(note => note.title === newTitle)
 
-      const newNote: NoteInterface = {
+      const newNote: NoteInterfaceDirty = {
         id: action.payload.id,
         title: nameMatchingNotes.length !== 0 ? `${newTitle} (${nameMatchingNotes.length})` : newTitle,
         dirty: false,

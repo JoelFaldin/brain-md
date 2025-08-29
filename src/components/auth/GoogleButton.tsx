@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 import { Google } from "@icons/brand"
 import AuthProvider from "./AuthButton"
 import { login } from "@store/userSlice"
-import { authApi } from "@store/auth"
+import { api } from "@store/api"
 import type { AuthInterface, UserInterface } from "@/interfaces"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
@@ -14,7 +14,7 @@ const GoogleButton = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [backendOAuth] = authApi.useGoogleBackendOAuthMutation()
+  const [backendOAuth] = api.useGoogleBackendOAuthMutation()
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse: TokenResponse) => {

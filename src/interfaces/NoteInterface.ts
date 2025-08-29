@@ -2,6 +2,9 @@ export interface NoteInterface {
   id: string,
   title: string,
   content?: string,
+}
+
+export interface NoteInterfaceDirty extends NoteInterface {
   dirty: boolean,
 }
 
@@ -11,7 +14,7 @@ export interface AddNoteInterface {
 }
 
 export interface NotesState {
-  notes: NoteInterface[],
+  notes: NoteInterfaceDirty[],
   activeNoteId: string | null,
   activeNoteContent: string | null,
   openedNotes: NoteInterface[],
