@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import type { AddNoteInterface, NotesState, SaveContent, Dirty } from "@/interfaces";
-import type { NoteInterfaceDirty } from "@/interfaces/NoteInterface";
+import type { NoteInterface, NoteInterfaceDirty } from "@/interfaces/NoteInterface";
 
 const initialState: NotesState = {
   notes: [],
@@ -28,6 +28,14 @@ const notesSlice = createSlice({
 
       state.notes.push(newNote)
       state.activeNoteId = newNote.id
+    },
+    injectNotes: (state, action: PayloadAction<NoteInterface[]>) => {
+      const notes = action.payload.map(notes => ({
+        ...notes,
+        dirty: false,
+      }))
+
+      state.notes = notes
     },
     updateNote: (state, action: PayloadAction<{id: string; title?: string, content?: string}>) => {
       const note = state.notes.find(n => n.id === action.payload.id)
@@ -82,12 +90,16 @@ const notesSlice = createSlice({
       if (note) {
         note.dirty = action.payload.dirty
       }
+    },
+    clearNotes: (state) => {
+      state.notes = []
     }
   }
 })
 
 export const {
   addNote,
+  injectNotes,
   updateNote,
   deleteNote,
   setActiveNote,
@@ -95,6 +107,7 @@ export const {
   toggleSidebar,
   saveNote,
   makeDirty,
+  clearNotes,
 } = notesSlice.actions
 
 export default notesSlice.reducer

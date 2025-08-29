@@ -7,6 +7,7 @@ import AuthProvider from "./AuthButton"
 import { login } from "@store/userSlice"
 import { api } from "@store/api"
 import type { AuthInterface, UserInterface } from "@/interfaces"
+import { injectNotes } from "@store/noteSlice"
 
 type GoogleErrorInterface = Pick<Error, 'message'> | unknown
 
@@ -35,6 +36,7 @@ const GoogleButton = () => {
       }
 
       dispatch(login(user))
+      dispatch(injectNotes(response.notes))
 
       navigate({
         to: "/editor"

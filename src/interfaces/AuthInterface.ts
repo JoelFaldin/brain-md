@@ -6,5 +6,5 @@ export interface AuthInterface {
   name: string,
   email: string,
   picture: string,
-  notes?: NoteInterface[],
+  notes: NoteInterface[],
 }

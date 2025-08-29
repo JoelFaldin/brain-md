@@ -7,7 +7,7 @@ import type { NoteInterface } from "@/interfaces/NoteInterface"
 import { useCreateNote } from "@hooks/index";
 import type { RootState } from "@store/store"
 import { logout } from "@store/userSlice"
-import { deleteNote } from "@store/noteSlice";
+import { clearNotes, deleteNote } from "@store/noteSlice";
 import { Close, Logout, Note, Options, Plus, Search, UserProfile } from "@icons/default"
 import { Modal, OptionsModal } from "@components/modals";
 
@@ -40,6 +40,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes, openNote }: EditorSidebar
 
   const handleLogout = () => {
     dispatch(logout())
+    dispatch(clearNotes())
     navigate({
       to: "/"
     })
