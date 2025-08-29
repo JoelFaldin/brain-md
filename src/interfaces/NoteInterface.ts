@@ -30,3 +30,8 @@ export interface Dirty {
   id: string,
   dirty: boolean,
 }
+
+export interface ReplaceNoteInterface {
+  tempId: string,
+  realId: string,
+}

@@ -30,7 +30,7 @@ const EditorHeader = () => {
           {
             openedNotes.map(note => {
               const isActive = activeNoteId === note.id
-              const isDirty = notesById[note.id].dirty
+              const isDirty = notesById[note.id]?.dirty
 
               return (
                 <div
