@@ -31,7 +31,7 @@ export const useCreateNote = () => {
     
     if (email) {
       try {
-        const createdNote = await createNoteMutation({ title, content: "", email: email }).unwrap()
+        const createdNote = await createNoteMutation({ title: newNote.title, content: "", email: email }).unwrap()
         dispatch(replaceNoteId({ tempId: newNote.id, realId: createdNote.note.id }))
       } catch (error) {
         console.log(error)

@@ -73,8 +73,10 @@ const notesSlice = createSlice({
     replaceNoteId: (state, action: PayloadAction<ReplaceNoteInterface>) => {
       const { tempId, realId } = action.payload
       const note = state.notes.find(n => n.id === tempId)
+      const openedNote = state.openedNotes.find(n => n.id === tempId)
 
       if (note) note.id = realId
+      if (openedNote) openedNote.id = realId
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen
