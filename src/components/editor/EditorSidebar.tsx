@@ -20,6 +20,7 @@ interface EditorSidebarInterface {
 
 const EditorSidebar = ({ isOpen, toggleSidebar, notes }: EditorSidebarInterface) => {  
   const [isCreateOpen, setIsCreateModal] = useState(false)
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -54,7 +55,7 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes }: EditorSidebarInterface)
             <span>{ name }</span>
             <span className="text-sm text-[var(--muted-foreground)]">{ email }</span>
           </span>
-          <button onClick={handleLogout} className="bg-transparent p-2 hover:bg-[var(--primary)] rounded-xl transition-colors cursor-pointer">
+          <button onClick={() => setIsLogoutOpen(true)} className="bg-transparent p-2 hover:bg-[var(--primary)] rounded-xl transition-colors cursor-pointer">
             <Logout className="h-5 w-5" />
           </button>
         </section>
@@ -98,6 +99,31 @@ const EditorSidebar = ({ isOpen, toggleSidebar, notes }: EditorSidebarInterface)
       <Modal open={isCreateOpen} closeModal={() => setIsCreateModal(false)}>
         <EditorNewNote closeModal={() => setIsCreateModal(false)} createNote={createNewNote} />
         <span onClick={() => setIsCreateModal(false)}>
+          <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
+        </span>
+      </Modal>
+
+      <Modal open={isLogoutOpen} closeModal={() => setIsLogoutOpen(false)}>
+        <div className="flex flex-col gap-3 md:w-sm">
+          <h2 className="font-bold text-xl">Log out?</h2>
+          <p>You can always log in later!</p>
+
+          <span className="flex flex-row gap-2 justify-end">
+            <button
+              className="p-2 border border-[var(--border)] rounded-md bg-[var(--card)] hover:bg-[var(--primary)] transition-colors cursor-pointer"
+              onClick={() => setIsLogoutOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="p-2 rounded-md bg-[var(--primary)] hover:bg-[var(--primary)]/80 disabled:bg-[var(--primary)]/30 text-black disabled:text-black/70 transition-colors cursor-pointer disabled:cursor-default"
+              onClick={handleLogout}
+            >
+              Continue
+            </button>
+          </span>
+        </div>
+        <span onClick={() => setIsLogoutOpen(false)}>
           <Close className="w-4 h-4 absolute top-4 right-4 hover:text-[var(--muted-foreground)] transition-colors cursor-pointer" />
         </span>
       </Modal>
