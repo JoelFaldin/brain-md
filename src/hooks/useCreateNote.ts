@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
 
 import type { AddNoteInterface } from "@/interfaces"
-import { addNote, openTab, replaceNoteId } from "@store/noteSlice"
+import { addNote, openTab, replaceNoteId, setActiveNote } from "@store/noteSlice"
 import { useCreateNoteMutation } from "@store/api"
 import type { RootState } from "@store/store"
 
@@ -28,7 +28,8 @@ export const useCreateNote = () => {
 
     dispatch(addNote(newNote))
     dispatch(openTab(newNote.id))
-    
+    dispatch(setActiveNote(newNote.id))
+
     if (email) {
       try {
         const createdNote = await createNoteMutation({ title: newNote.title, content: "", email: email }).unwrap()

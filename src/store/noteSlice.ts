@@ -55,8 +55,9 @@ const notesSlice = createSlice({
 
       if (state.openedNotes.length != 0) {
         state.activeNoteId = state.openedNotes[0].id
+      } else {
+        state.activeNoteId = null
       }
-
     },
     setActiveNote: (state, action: PayloadAction<string | null>) => {
       state.activeNoteId = action.payload
@@ -77,6 +78,7 @@ const notesSlice = createSlice({
 
       if (note) note.id = realId
       if (openedNote) openedNote.id = realId
+      state.activeNoteId = realId
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen

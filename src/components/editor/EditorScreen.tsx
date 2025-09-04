@@ -34,7 +34,11 @@ const EditorScreen = ({ activeNote }: EditorScreenInterface) => {
   }, [activeNote, notes])
 
   const handleChange = (event: string | undefined) => {
-    dispatch(makeDirty({ id: activeNote, dirty: true }))
+    const findNote = notes.find(n => n.id === activeNote)
+
+    if (findNote && !findNote.dirty) {
+      dispatch(makeDirty({ id: activeNote, dirty: true }))
+    }
     setEditorValue(event)
   }
 
