@@ -25,8 +25,15 @@ export const api = createApi({
         url: `${backendApi}/notes/${id}`,
         method: "DELETE",
       }),
+    }),
+    updateNoteTitle: builder.mutation({
+      query: ({ newTitle, noteId }) => ({
+        url: `${backendApi}/notes/${noteId}`,
+        method: "PATCH",
+        body: { title: newTitle }
+      }),
     })
   })
 })
 
-export const { useGoogleBackendOAuthMutation, useCreateNoteMutation, useDeleteNoteMutation } = api
+export const { useGoogleBackendOAuthMutation, useCreateNoteMutation, useDeleteNoteMutation, useUpdateNoteTitleMutation } = api

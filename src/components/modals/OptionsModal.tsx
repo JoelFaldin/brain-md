@@ -5,12 +5,12 @@ import { Delete, Edit } from "@icons/default"
 interface OptionsModalInterface {
   x: number,
   y: number,
-  noteIdOptions: string | null,
   onClose: () => void,
+  triggerEditModal: (arg: boolean) => void,
   triggerDeleteModal: (arg: boolean) => void,
 }
 
-const OptionsModal = ({ x, y, noteIdOptions, onClose, triggerDeleteModal }: OptionsModalInterface) => {
+const OptionsModal = ({ x, y, onClose, triggerEditModal, triggerDeleteModal }: OptionsModalInterface) => {
   const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -27,10 +27,6 @@ const OptionsModal = ({ x, y, noteIdOptions, onClose, triggerDeleteModal }: Opti
     }
   }, [onClose])
 
-  const edit = () => {
-    console.log("editing!", noteIdOptions)
-  }
-
   return (
     <div
       ref={modalRef}
@@ -39,7 +35,7 @@ const OptionsModal = ({ x, y, noteIdOptions, onClose, triggerDeleteModal }: Opti
     >
       <ul className="flex flex-col gap-1">
         <li>
-          <button onClick={edit} className="flex flex-row gap-2 w-full rounded-md hover:bg-[var(--muted)] p-2">
+          <button onClick={() => triggerEditModal(true)} className="flex flex-row gap-2 w-full rounded-md hover:bg-[var(--muted)] p-2">
             <Edit className="h-5 w-5" />
             Edit
           </button>

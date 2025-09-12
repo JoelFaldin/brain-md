@@ -35,12 +35,19 @@ const notesSlice = createSlice({
       state.activeNoteId = null
     },
     updateNote: (state, action: PayloadAction<{id: string; title?: string, content?: string}>) => {
-      const note = state.notes.find(n => n.id === action.payload.id)
+      const { id, title, content } = action.payload
+      const note = state.notes.find(n => n.id === id)
 
       if (note) {
-        if (action.payload.title !== undefined) note.title = action.payload.title
-        if (action.payload.content !== undefined) note.content = action.payload.content
-        note.dirty = true
+        if (title !== undefined) note.title = title
+        if (content !== undefined) note.content = content
+      }
+
+      // Updating opened notes:
+      const findOpenNote = state.openedNotes.find(n => n.id === id)
+
+      if (findOpenNote && title) {
+        findOpenNote.title = title!
       }
     },
     deleteNote: (state, action: PayloadAction<string | null>) => {
